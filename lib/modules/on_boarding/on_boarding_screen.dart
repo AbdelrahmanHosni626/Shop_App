@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app/modules/login/login_screen.dart';
 import 'package:shop_app/shared/components/components.dart';
+import 'package:shop_app/shared/network/local/cache_helper.dart';
 import 'package:shop_app/shared/styles/colors.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -44,6 +45,17 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
 
   bool isLast = false;
 
+
+  void submit()
+  {
+    CacheHelper.saveData(key: 'onBoarding', value: true).then((value) {
+      if(value)
+        {
+          navigateAndFinish(context, LoginScreen());
+        }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,7 +64,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           TextButton(
             onPressed: ()
             {
-              navigateAndFinish(context, LoginScreen());
+              submit();
             },
             child: const Text(
               'SKIP',
@@ -105,10 +117,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 FloatingActionButton(
                   onPressed: () {
                     if (isLast) {
-                      navigateAndFinish(
-                        context,
-                        LoginScreen(),
-                      );
+                      submit();
                     } else {
                       boardingController.nextPage(
                         duration: const Duration(
