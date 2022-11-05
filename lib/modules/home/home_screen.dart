@@ -7,10 +7,10 @@ import 'package:shop_app/layout/cubit/states.dart';
 import 'package:shop_app/models/home/home_model.dart';
 import 'package:shop_app/shared/styles/colors.dart';
 
+import '../../models/categories/categories_model.dart';
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
-
-  //Hello
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +20,8 @@ class HomeScreen extends StatelessWidget {
         var cubit = ShopCubit.get(context);
 
         return ConditionalBuilder(
-          condition: cubit.homeModel != null,
-          builder: (context) => homeBuilder(cubit.homeModel!),
+          condition: cubit.homeModel != null && cubit.categoriesModel != null,
+          builder: (context) => homeBuilder(cubit.homeModel!, cubit.categoriesModel!),
           fallback: (context) => const Center(
             child: CircularProgressIndicator(),
           ),
@@ -30,7 +30,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget homeBuilder(HomeModel model) => SingleChildScrollView(
+  Widget homeBuilder(HomeModel model, CategoriesModel categoriesModel) => SingleChildScrollView(
         scrollDirection: Axis.vertical,
         physics: const BouncingScrollPhysics(),
         child: Column(
@@ -63,19 +63,59 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(
               height: 20.0,
             ),
-            Container(
-              color: Colors.grey[300],
-              child: GridView.count(
-                shrinkWrap: true,
-                crossAxisCount: 2,
-                mainAxisSpacing: 1,
-                crossAxisSpacing: 1,
-                childAspectRatio: 1 / 1.73,
-                physics: const NeverScrollableScrollPhysics(),
-                children: List.generate(
-                  model.data!.products!.length,
-                  (index) => buildGridItem(model.data!.products![index]),
-                ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 10.0,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Categories',
+                    style: TextStyle(
+                      fontSize: 24.0,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10.0,
+                  ),
+                  SizedBox(
+                    height: 100.0,
+                    child: ListView.separated(
+                      physics: const BouncingScrollPhysics(),
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) => buildCategoryItem(categoriesModel.data!.data![index]),
+                      separatorBuilder: (context, index) => const SizedBox(width: 20.0,),
+                      itemCount: categoriesModel.data!.data!.length,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10.0,
+                  ),
+                  const Text(
+                    'New Products',
+                    style: TextStyle(
+                      fontSize: 24.0,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                  Container(
+                    color: Colors.grey[300],
+                    child: GridView.count(
+                      shrinkWrap: true,
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 1,
+                      crossAxisSpacing: 1,
+                      childAspectRatio: 1 / 1.83,
+                      physics: const NeverScrollableScrollPhysics(),
+                      children: List.generate(
+                        model.data!.products!.length,
+                        (index) => buildGridItem(model.data!.products![index]),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
@@ -165,5 +205,33 @@ class HomeScreen extends StatelessWidget {
             ),
           ],
         ),
+      );
+
+  Widget buildCategoryItem(DataModel model) => Stack(
+        alignment: AlignmentDirectional.bottomCenter,
+        children: [
+          Image(
+            image: NetworkImage(
+              model.image!,
+            ),
+            width: 100.0,
+            height: 100.0,
+            fit: BoxFit.cover,
+          ),
+          Container(
+            width: 100.0,
+            color: Colors.black.withOpacity(0.6),
+            child: Text(
+              model.name!,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 15.0,
+              ),
+            ),
+          ),
+        ],
       );
 }
