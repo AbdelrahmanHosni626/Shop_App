@@ -10,6 +10,8 @@ import 'package:shop_app/shared/styles/colors.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
+  //Hello
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ShopCubit, ShopStates>(
