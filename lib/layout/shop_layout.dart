@@ -13,7 +13,7 @@ class ShopLayoutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => ShopCubit()..getHomeData(),
+      create: (BuildContext context) => ShopCubit()..getHomeData()..getCategoriesData(),
       child: BlocConsumer<ShopCubit, ShopStates>(
         listener: (BuildContext context, state) {},
         builder: (BuildContext context, Object? state) {

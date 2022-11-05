@@ -1,3 +1,4 @@
+import 'package:shop_app/models/categories/categories_model.dart';
 import 'package:shop_app/models/home/home_model.dart';
 
 abstract class ShopStates {}
@@ -6,18 +7,35 @@ class ShopInitialState extends ShopStates {}
 
 class ShopChangeBottomNavBarState extends ShopStates {}
 
-class ShopGetLoadingState extends ShopStates {}
+class ShopGetHomeLoadingState extends ShopStates {}
 
-class ShopGetSuccessState extends ShopStates
+class ShopGetHomeSuccessState extends ShopStates
 {
   final HomeModel homeModel;
 
-  ShopGetSuccessState(this.homeModel);
+  ShopGetHomeSuccessState(this.homeModel);
 }
 
-class ShopGetErrorState extends ShopStates
+class ShopGetHomeErrorState extends ShopStates
 {
   final String error;
 
-  ShopGetErrorState(this.error);
+  ShopGetHomeErrorState(this.error);
+}
+
+
+class ShopGetCategoriesLoadingState extends ShopStates {}
+
+class ShopGetCategoriesSuccessState extends ShopStates
+{
+  final CategoriesModel categoriesModel;
+
+  ShopGetCategoriesSuccessState(this.categoriesModel);
+}
+
+class ShopGetCategoriesErrorState extends ShopStates
+{
+  final String error;
+
+  ShopGetCategoriesErrorState(this.error);
 }
