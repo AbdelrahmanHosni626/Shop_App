@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:shop_app/layout/shop_layout.dart';
 import 'package:shop_app/shared/bloc_observer.dart';
+import 'package:shop_app/shared/components/constants.dart';
 import 'package:shop_app/shared/network/local/cache_helper.dart';
 import 'package:shop_app/shared/network/remote/dio_helper.dart';
 import 'package:shop_app/shared/styles/themes.dart';
@@ -19,7 +20,7 @@ void main() async {
   Widget widget;
 
   dynamic onBoarding = CacheHelper.getData(key: 'onBoarding');
-  dynamic token = CacheHelper.getData(key: 'token');
+  token = CacheHelper.getData(key: 'token');
 
   if (onBoarding != null) {
     if (token != null) {

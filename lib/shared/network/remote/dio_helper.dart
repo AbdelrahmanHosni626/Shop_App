@@ -19,7 +19,7 @@ class DioHelper {
     required String url,
     Map<String, dynamic>? query,
     String lang = 'en',
-    String? accessToken,
+    String? token,
   })
   async {
     dio.options.headers =
@@ -27,7 +27,7 @@ class DioHelper {
       'Content-Type' : 'application/json',
       'Accept' : 'application/json',
       'lang': lang,
-      'Authorization': 'Bearer $accessToken',
+      'Authorization': 'Bearer ${token??''} ',
     };
 
     return await dio.get(url, queryParameters: query,);
@@ -49,7 +49,7 @@ class DioHelper {
       'Content-Type' : 'application/json',
       'Accept' : 'application/json',
       'lang': lang,
-      'Authorization': 'Bearer $token',
+      'Authorization': 'Bearer ${token??''} ',
 
     };
 

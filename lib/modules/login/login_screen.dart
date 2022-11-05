@@ -29,7 +29,7 @@ class LoginScreen extends StatelessWidget {
                 key: 'token',
                 value: state.loginModel.data!.token!,
               ).then((value) {
-                navigateTo(context, ShopLayoutScreen(),);
+                navigateAndFinish(context, ShopLayoutScreen(),);
               });
               showToast(
                 text: state.loginModel.message!,
